@@ -1,0 +1,13 @@
+case $1 in
+start)
+echo "start auto_dhclient_eth0_seek.sh"
+sh /etc/init.d/auto_dhclient_eth0_seek.sh
+;;
+stop)
+echo "stop auto_dhclient_eth0_seek.sh"
+sh /etc/init.d/auto_dhclient_eth0_seek.sh
+;;
+*)
+echo "Usage: $0 (start|stop)"
+;;
+esac

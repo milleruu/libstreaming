@@ -1,0 +1,80 @@
+1、写一个脚本auto_dhclient_eth0_seek.sh：
+
+复制代码代码如下:
+
+#!/bin/sh
+#chkconfig:2345 80 90
+#description:auto_dhclient_eth0_seek
+dhclient eth0
+
+
+放到/etc/init.d/auto_coreseek.sh
+然后chmod +x /etc/init.d/auto_dhclient_eth0_seek.sh
+ 
+
+2、开bash自动启动
+在/etc/profile的最后，加上/etc/init.d/auto_dhclient_eth0_seek.sh
+
+
+
+
+3、设置系统自动启动
+在/etc/init.d/下创建auto_dhclient_eth0_seek文件
+
+内容：
+
+case $1 in
+start)
+sh /etc/init.d/auto_dhclient_eth0_seek.sh
+;;
+stop)
+sh /etc/init.d/auto_dhclient_eth0_seek.sh
+;;
+*)
+echo "Usage: $0 (start|stop)"
+;;
+esac
+更改权限
+# chmod 775 auto_dhclient_eth0_seek
+
+加入自动启动
+# chkconfig –add auto_dhclient_eth0_seek
+
+查看自动启动设置
+# chkconfig –list auto_dhclient_eth0_seek
+
+smsafe 0:off 1:off 2:off 3:on 4:off 5:on 6:off
+
+以后可以用以下命令启动和停止脚本
+# service auto_dhclient_eth0_seek start 启动
+
+# service auto_dhclient_eth0_seek stop 停止
+
+
+
+4、没有chkconfig的情况下，手工创建服务  
+
+设置脚本的运行权限chmod +x auto_dhclient_eth0_seek。
+
+
+然后在rc0.d-rc6.d目录下分别创建文件连接。
+ln -s /etc/rc.d/init.d/auto_dhclient_eth0_seek /etc/rc2.d/S99auto_dhclient_eth0_seek
+ln -s /etc/rc.d/init.d/auto_dhclient_eth0_seek /etc/rc3.d/S99auto_dhclient_eth0_seek
+ln -s /etc/rc.d/init.d/auto_dhclient_eth0_seek /etc/rc5.d/S99auto_dhclient_eth0_seek
+ln -s /etc/rc.d/init.d/auto_dhclient_eth0_seek /etc/rc0.d/K01auto_dhclient_eth0_seek
+ln -s /etc/rc.d/init.d/auto_dhclient_eth0_seek /etc/rc6.d/K01auto_dhclient_eth0_seek
+
+0 - 停机 
+1 - 单用户模式 
+2 - 多用户，但是没有NFS ，不能使用网络 
+3 - 完全多用户模式，我最喜欢的模式 
+4 - “打酱油” 模式，没有用到 
+5 - X11   桌面模式
+6 - 重新启动 （如果将默认启动模式设置为6，Linux将会不断重启）
+
+这样系统在启动的时候，就会运行auto_dhclient_eth0_seek 并加上start参数，等同于执行命令auto_run start。
+在系统关闭的时候，就会运行auto_dhclient_eth0_seek，并加上stop参数，等同于运行命令auto_run stop。
+S99的S代表start服务，后面的数字代表优先级，数字越大，越后启动。
+K01的K代表Kill服务
+
+

@@ -1,0 +1,585 @@
+编译rfc5766-turn-server搭建turn服务器
+
+1、
+{
+wen@wen-machine:~/stun-turn/turnserver-0.7.3$ ./configure 
+checking for pkg-config... /usr/bin/pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for CHECK... no
+testing is disabled
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc and cc understand -c and -o together... yes
+checking for sed... sed
+checking for timer_create in -lrt... yes
+checking for SSL_new in -lssl... no
+	Please install libssl-dev
+
+}
+
+2、Please install libssl-dev ：   	sudo apt-get install libssl-dev
+3、Please install libconfuse-dev ：	sudo apt-get install libconfuse-dev
+
+4、
+{
+wen@wen-machine:~/stun-turn/turnserver-0.7.3$  ./configure --enable-debug-build
+checking for pkg-config... /usr/bin/pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for CHECK... no
+testing is disabled
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc and cc understand -c and -o together... yes
+checking for sed... sed
+checking for timer_create in -lrt... yes
+checking for SSL_new in -lssl... yes
+checking for ERR_reason_error_string in -lcrypto... yes
+checking for cfg_init in -lconfuse... yes
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking arpa/inet.h usability... yes
+checking arpa/inet.h presence... yes
+checking for arpa/inet.h... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking netdb.h usability... yes
+checking netdb.h presence... yes
+checking for netdb.h... yes
+checking netinet/in.h usability... yes
+checking netinet/in.h presence... yes
+checking for netinet/in.h... yes
+checking stddef.h usability... yes
+checking stddef.h presence... yes
+checking for stddef.h... yes
+checking for stdint.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking syslog.h usability... yes
+checking syslog.h presence... yes
+checking for syslog.h... yes
+checking for unistd.h... (cached) yes
+checking for an ANSI C-conforming const... yes
+checking for uid_t in sys/types.h... yes
+checking for inline... inline
+checking for int16_t... yes
+checking for int32_t... yes
+checking for int64_t... yes
+checking for int8_t... yes
+checking for mode_t... yes
+checking for pid_t... yes
+checking for size_t... yes
+checking for ssize_t... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking whether struct tm is in sys/time.h or time.h... time.h
+checking for uint16_t... yes
+checking for uint32_t... yes
+checking for uint64_t... yes
+checking for uint8_t... yes
+checking for working volatile... yes
+checking for doxygen... no
+configure: WARNING: doxygen not found - will not generate any doxygen documentation
+checking for perl... /usr/bin/perl
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+/bin/bash: /home/wen/missing: No such file or directory
+configure: WARNING: 'missing' script is too old or missing
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... no
+checking for mawk... mawk
+checking whether make sets $(MAKE)... yes
+checking for style of include used by make... GNU
+checking whether make supports nested variables... yes
+checking dependency style of gcc... gcc3
+checking vfork.h usability... no
+checking vfork.h presence... no
+checking for vfork.h... no
+checking for fork... yes
+checking for vfork... yes
+checking for working fork... yes
+checking for working vfork... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible malloc... yes
+checking for working memcmp... yes
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking for sys/socket.h... (cached) yes
+checking types of arguments for select... int,fd_set *,struct timeval *
+checking return type of signal handlers... void
+checking whether strerror_r is declared... yes
+checking for strerror_r... yes
+checking whether strerror_r returns char *... no
+checking for vprintf... yes
+checking for _doprnt... no
+checking for dup2... yes
+checking for gettimeofday... yes
+checking for memset... yes
+checking for select... yes
+checking for pselect... yes
+checking for socket... yes
+checking for strchr... yes
+checking for strdup... yes
+checking for strerror... yes
+checking for sigaction... yes
+checking for signal... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating Doxyfile
+config.status: creating src/Makefile
+config.status: creating man/Makefile
+config.status: creating doc/Makefile
+config.status: creating extra/Makefile
+config.status: creating test/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+configure: Configuration
+
+turnserver version 0.7.3
+  Enable debug build: .............. yes
+  User-defined FD_SETSIZE: ......... no
+  User-defined XOR_PEER_ADDRESS_MAX: 5
+
+}
+
+5、make
+
+6、
+{
+wen@wen-machine:~/stun-turn/turnserver-0.7.3$ sudo make install
+Making install in src
+make[1]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/src'
+make[2]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/src'
+ /bin/mkdir -p '/usr/local/bin'
+  /usr/bin/install -c test_turn_client test_echo_server '/usr/local/bin'
+ /bin/mkdir -p '/usr/local/sbin'
+  /usr/bin/install -c turnserver '/usr/local/sbin'
+make[2]: Nothing to be done for `install-data-am'.
+make[2]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/src'
+make[1]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/src'
+Making install in man
+make[1]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/man'
+make  install-am
+make[2]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/man'
+make[3]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/man'
+make[3]: Nothing to be done for `install-exec-am'.
+ /bin/mkdir -p '/usr/local/share/man/man1'
+ /usr/bin/install -c -m 644 'turnserver.man' '/usr/local/share/man/man1/turnserver.1'
+ /bin/mkdir -p '/usr/local/share/man/man5'
+ /usr/bin/install -c -m 644 'turnserver.conf.man' '/usr/local/share/man/man5/turnserver.conf.5'
+make[3]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/man'
+make[2]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/man'
+make[1]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/man'
+Making install in test
+make[1]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/test'
+make[2]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/test'
+make[2]: Nothing to be done for `install-exec-am'.
+make[2]: Nothing to be done for `install-data-am'.
+make[2]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/test'
+make[1]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/test'
+Making install in doc
+make[1]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/doc'
+make[2]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/doc'
+make[2]: Nothing to be done for `install-exec-am'.
+make[2]: Nothing to be done for `install-data-am'.
+make[2]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/doc'
+make[1]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/doc'
+Making install in extra
+make[1]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/extra'
+make[2]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3/extra'
+make[2]: Nothing to be done for `install-exec-am'.
+make[2]: Nothing to be done for `install-data-am'.
+make[2]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/extra'
+make[1]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3/extra'
+make[1]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3'
+make[2]: Entering directory `/home/wen/stun-turn/turnserver-0.7.3'
+make[2]: Nothing to be done for `install-exec-am'.
+make[2]: Nothing to be done for `install-data-am'.
+make[2]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3'
+make[1]: Leaving directory `/home/wen/stun-turn/turnserver-0.7.3'
+
+}
+
+
+7、配置
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1、sudo apt-get install rfc5766-turn-server
+2、
+{
+wen@wen-machine:~/stun-turn/turnserver-0.7.3$ turnadmin -k -u wen -r north.gov -p 123456
+0x53a5141b8dfafc2c150f82fb62dc752e
+}
+
+3、
+修改/etc/turnserver.conf 文件(直接将一下内容覆盖原来的文件)
+{
+listening-ip=外网ip  
+listening-port=3478  
+tls-listening-port=5349
+relay-ip=外网ip  
+external-ip=外网ip  
+relay-threads=50  
+lt-cred-mech  
+user= myuserHello: 0xa9c04dc63524413e8c16fa1bb04a1472(格式：user:pass)  
+userdb=/etc/turnuserdb.conf  
+#max-bps=102400  
+pidfile="/var/run/turnserver.pid"  
+}
+配置说明：
+{
+# TURN为UDP和TCP的侦听器端口(默认: 3478)。  
+# 注:实际上,TLS和DTLS会话可以连接到"清晰的"TCP和UDP端口,  
+#    如果允许配置。  
+listening-ip=外网ip  
+listening-port=3478  
+# TURN为TLS的侦听器端口(默认: 5349)。  
+# 注意:事实上,"清晰的"TCP和UDP会话可以连接到TLS和DTLS端口，  
+#      如果允许配置。  
+# TURN服务器"自动"识别传输类型。  
+# 实际上,两个监听终端点("清晰的"端和"TLS"端)是  
+# 对等的功能;但我们保持两个端点来满足RFC 5766规范。  
+# 对于安全的TCP连接,我们目前支持SSL的3个版本，  
+# 是TLS 1.0版本,1.1版本和1.2版本。  
+# SSL2还支持"encapculation模式"。  
+# 对于安全的UDP连接,我们支持DTLS版本1。  
+tls-listening-port=5349  
+# 中继地址(本地IP地址将用于传递数据包的给每个端)  
+# 可以使用多个中继地址。  
+# 相同的IP可以用作监听IP和继电器IP。  
+# 如果没有指定中继IP，那么turnserver将应用默认策略：  
+# 它将自行决定使用那个中继  
+# 地址，并且它总是会使用客户端套接字的  
+# IP地址作为中继的IP地址在TURN会话中(如果  
+# 请求的中继地址族解决同族的客户端套接字)。  
+#  
+relay-ip=外网ip  
+#  
+# Amazon EC2用户:  
+# TURN服务器公开/私有的地址映射，假如服务器是在NAT后端。  
+# 在这种情况下,如果一个表单中"-X <ip>"使用一个-X，  
+# 然后该ip将被作为中继ip地址来使用。  
+# 这种情况只适用于一个简单的例子,  
+# 当一个中继的地址是被使用,和没有RFC5780功能是必需的。  
+# 单个中继地址必须通过NAT映射到外部的IP。  
+# 外部的IP值，假如不为空，通过XOR-RELAYED-ADDRESS字段返回。  
+# 外部的IP,NAT必须直接转发端口(转发端口12345，  
+# 必须总是映射到相同的外部端口12345)。  
+# 在更复杂的情况下,当涉及到多个IP地址,  
+# 这个选项必须使用几次,每个条目必须形  
+# 成"-X <public-ip/private-ip>",将所有涉及到的地址。  
+# RFC5780 NAT发现STUN功能正常工作，  
+# 如果正确的地址映射,即使TURN服务器本身是  
+# 在一个NAT后。  
+# 默认，该值为空，并且没有使用地址映射。  
+#  
+external-ip=外网ip  
+#  
+# 数量的中继线程处理建立连接(除了验证线程和侦听器线程)。  
+# 如果设置为0,那么应用程序中继进程在一个线程中运行,在同一  
+# 个线程中监听处理(身份验证线程仍然是一个单独的线程)。  
+# 在旧系统(3.9 Linux内核之前),  
+# 数量的UDP线程总是一个线程监听一个网络端点,  
+# 包括辅助端点——除非设置0或1值。  
+#  
+relay-threads=50  
+#  
+# 取消使用长期证书机制。  
+# 默认情况下不使用凭证机制(允许任何用户)。  
+# 这个选项可能使用用户数据文件或  
+# PostgreSQL或MySQL或Redis来存储用户密钥。  
+#  
+lt-cred-mech  
+#  
+# 钥匙必须由turnadmin实用程序生成。键值取决于用户名称、领域和密码:  
+#  
+# Example:  
+# 例子,使用以下命令:  
+#  
+# $ turnadmin -k -u ninefingers -r north.gov -p youhavetoberealistic  
+#  
+# Output: 0xbc807ee29df3c9ffa736523fb2c4e8ee  
+# 输出是: 0xbc807ee29df3c9ffa736523fb2c4e8ee  
+#  
+# ('0x' in the beginning of the key is what differentiates the key from  
+# password. If it has 0x then it is a key, otherwise it is a password).  
+# ('0x'开始的关键是区分从密码的关键。  
+# 如果它有0x,那么它是一个关键,否则这是一个密码)。  
+#  
+# The corresponding user account entry in the config file will be:  
+# 相应的配置文件中的用户帐户条目将:  
+#  
+#user=ninefingers:0xbc807ee29df3c9ffa736523fb2c4e8ee  
+# Or, equivalently, with open clear password (less secure):  
+#或者是这样，明文密码(不安全的):  
+#user=ninefingers:youhavetoberealistic  
+#  
+user=user:password  
+#  
+# 'Dynamic'用户帐户数据库文件名。  
+# 只有用户长期机制可以存储在一个文件,短期机制不会处理选项,短期机制需要PostgreSQL或MySQL或  
+# Redis数据库。  
+# 'Dynamic'的长期用户帐户在turnserver程序中动态检查的,  
+# 这样他们可以改变的在turnserver运行时。  
+# 默认文件名是turnuserdb.conf.  
+#  
+userdb=/etc/turnuserdb.conf  
+#  
+# 存储进程pid的文件名。  
+# 默认是/var/run/turnserver.pid(超级用户使用)  
+# 或者是/var/tmp/turnserver.pid  
+#  
+pidfile="/var/run/turnserver.pid"  
+}
+
+
+4、
+{
+在修改/etc/ turnuserdb.conf文件：
+如果你只有一个用户就配置下面这一句就好了，这里的跟turnuserdb.conf配置的用户名密码保持一致：
+
+{
+myuserHello: 0xa9c04dc63524413e8c16fa1bb04a1472(格式：user:pass)  
+}
+配置解释：
+{
+#This file can be used as user accounts storage for long-term credentials mechanism.  
+#这个文件可以用作长期用户帐户存储凭证机制。  
+# Keys must be generated by turnadmin utility. The key value depends  
+# on user name, realm, and password:  
+# 钥匙必须由turnadmin实用程序生成。键值取决于用户名称、领域和密码:  
+#  
+# Example:  
+# 例子,使用以下命令:  
+# $ turnadmin -k -u ninefingers -r north.gov -p youhavetoberealistic  
+# Output: 0xbc807ee29df3c9ffa736523fb2c4e8ee  
+# 输出是: 0xbc807ee29df3c9ffa736523fb2c4e8ee  
+#  
+# ('0x' in the beginning of the key is what differentiates the key from  
+# password. If it has 0x then it is a key, otherwise it is a password).  
+# ('0x'开始的关键是区分从密码的关键。如果它有0x,那么它是一个关键,否则这是一个密码)。  
+#  
+# The corresponding user account entry in the userdb file will be:  
+# 相应的用户帐号在userdb文件中是：  
+#  
+#ninefingers:0xbc807ee29df3c9ffa736523fb2c4e8ee  
+# Or, equivalently (less secure):  
+#或者是这样(不安全的):  
+#ninefingers:youhavetoberealistic  
+#  
+yourname:yourpsw 
+} 
+
+}
+
+
+
+！！！
+注意：Realm, for long-term credentials and for TURN REST API.(north.gov)
+
+5、启动
+{
+wen@wen-machine:~/stun-turn/turnserver-0.7.3$ sudo turnserver -L 192.168.88.130 -c /etc/turnserver.conf -o -a -b /etc/turnuserdb.conf -f -r north.gov
+0: 
+RFC 3489/5389/5766/5780/6062/6156 STUN/TURN Server
+Version Citrix-3.2.3.1 'Marshal West'
+0: 
+Max number of open files/sockets allowed for this process: 4096
+0: 
+Due to the open files/sockets limitation,
+max supported number of TURN Sessions possible is: 2000 (approximately)
+0: 
+
+==== Show him the instruments, Practical Frost: ====
+
+0: TLS supported
+0: DTLS supported
+0: Redis supported
+0: PostgreSQL supported
+0: MySQL supported
+0: OpenSSL version: fresh enough
+0: Default Net Engine version: 3 (UDP thread per CPU core)
+
+=====================================================
+
+0: Listener address to use: 192.168.88.130
+0: Relay address to use: 192.168.88.130
+0: WARNING: cannot find certificate file: turn_server_cert.pem (1)
+0: WARNING: cannot start TLS and DTLS listeners because certificate file is not set properly
+0: WARNING: cannot find private key file: turn_server_pkey.pem (1)
+0: WARNING: cannot start TLS and DTLS listeners because private key file is not set properly
+}
+
+6、测试
+{
+浏览器中输入http://192.168.88.130:3478/
+显示TURN Server
+}ok
+
+
+利用pjnath的/home/wen/pjproject/pjproject-2.4.5/pjnath/bin/pjturn-client-x86_64-unknown-linux-gnu来验证：
+{
+
+-u wen
+-p 123456	(0x53a5141b8dfafc2c150f82fb62dc752e)
+-r north.gov
+
+	{
+
+	./pjturn-client-x86_64-unknown-linux-gnu -u wen -r north.gov -p 123456 192.168.88.130
+
+
+	...
+
+	+=====================================================================+
+	|             CLIENT                 |             PEER-0             |
+	|                                    |                                |
+	| State     : NULL                   | Address: 192.168.88.130:42573  |
+	| Relay addr: 0.0.0.0:0              |                                |
+	|                                    | 0  Send data to relay address  |
+	| a      Allocate relay              |                                |
+	| p,pp   Set permission for peer 0/1 +--------------------------------+
+	| s,ss   Send data to peer 0/1       |             PEER-1             |
+	| b,bb   BindChannel to peer 0/1     |                                |
+	| x      Delete allocation           | Address: 192.168.88.130:51992  |
+	+------------------------------------+                                |
+	| q  Quit                  d  Dump   | 1  Send data to relay adderss  |
+	+------------------------------------+--------------------------------+
+	>>> a
+
+	...
+
+	17:00:36.167 udprel0x17dd34  .Retrying request with new authentication
+	17:00:36.167 udprel0x17dd34  ..TX 112 bytes STUN message to 192.168.88.130:3478:
+	--- begin STUN message ---
+	STUN Allocate request
+	 Hdr: length=92, magic=2112a442, tsx_id=000055741190cde70216231c
+	 Attributes:
+	  REQUESTED-TRANSPORT: length=4, value=285212672 (0x11000000)
+	  SOFTWARE: length=12, value="pjnath-2.4.5"
+	  USERNAME: length=3, value="wen"
+	  REALM: length=9, value="north.gov"
+	  NONCE: length=16, value="7c18117126e0c73e"
+	  MESSAGE-INTEGRITY: length=20, data=d0e81079affdc9a2842e1f99e9aef0a748eba8dc
+	--- end of STUN message ---
+
+
+	+=====================================================================+
+	|             CLIENT                 |             PEER-0             |
+	|                                    |                                |
+	| State     : Ready                  | Address: 192.168.88.130:41219  |
+	| Relay addr: 192.168.88.130:52737   |                                |
+	|                                    | 0  Send data to relay address  |
+	| a      Allocate relay              |                                |
+	| p,pp   Set permission for peer 0/1 +--------------------------------+
+	| s,ss   Send data to peer 0/1       |             PEER-1             |
+	| b,bb   BindChannel to peer 0/1     |                                |
+	| x      Delete allocation           | Address: 192.168.88.130:46983  |
+	+------------------------------------+                                |
+	| q  Quit                  d  Dump   | 1  Send data to relay adderss  |
+	+------------------------------------+--------------------------------+
+	>>> 17:01:16.727  client_main.c  peer0: received 18 bytes data from 192.168.88.130:52737: Hello from client
+
+	1
+
+
+	+=====================================================================+
+	|             CLIENT                 |             PEER-0             |
+	|                                    |                                |
+	| State     : Ready                  | Address: 192.168.88.130:41219  |
+	| Relay addr: 192.168.88.130:52737   |                                |
+	|                                    | 0  Send data to relay address  |
+	| a      Allocate relay              |                                |
+	| p,pp   Set permission for peer 0/1 +--------------------------------+
+	| s,ss   Send data to peer 0/1       |             PEER-1             |
+	| b,bb   BindChannel to peer 0/1     |                                |
+	| x      Delete allocation           | Address: 192.168.88.130:46983  |
+	+------------------------------------+                                |
+	| q  Quit                  d  Dump   | 1  Send data to relay adderss  |
+	+------------------------------------+--------------------------------+
+	>>> 17:01:35.423 udprel0x17dd34  .RX 100 bytes STUN message from 192.168.88.130:3478:
+	--- begin STUN message ---
+	STUN Data indication
+	 Hdr: length=80, magic=2112a442, tsx_id=26e4a149e43b6d7de325f5b3
+	 Attributes:
+	  DATA: length=17, data=48656c6c6f2066726f6d20706565723100
+	  XOR-PEER-ADDRESS: length=8, IPv4 addr=192.168.88.130:46983
+	  SOFTWARE: length=29, value="Citrix-3.2.3.1 'Marshal West'"
+	  FINGERPRINT: length=4, value=3217033957 (0xbfc00ae5)
+	--- end of STUN message ---
+
+	17:01:35.423  client_main.c  .Client received 17 bytes data from 192.168.88.130:46983: Hello from peer1
+	0
+
+
+	+=====================================================================+
+	|             CLIENT                 |             PEER-0             |
+	|                                    |                                |
+	| State     : Ready                  | Address: 192.168.88.130:41219  |
+	| Relay addr: 192.168.88.130:52737   |                                |
+	|                                    | 0  Send data to relay address  |
+	| a      Allocate relay              |                                |
+	| p,pp   Set permission for peer 0/1 +--------------------------------+
+	| s,ss   Send data to peer 0/1       |             PEER-1             |
+	| b,bb   BindChannel to peer 0/1     |                                |
+	| x      Delete allocation           | Address: 192.168.88.130:46983  |
+	+------------------------------------+                                |
+	| q  Quit                  d  Dump   | 1  Send data to relay adderss  |
+	+------------------------------------+--------------------------------+
+	>>> 17:01:39.498 udprel0x17dd34  .RX 100 bytes STUN message from 192.168.88.130:3478:
+	--- begin STUN message ---
+	STUN Data indication
+	 Hdr: length=80, magic=2112a442, tsx_id=42ab143104a83b1fd4d70d5c
+	 Attributes:
+	  DATA: length=17, data=48656c6c6f2066726f6d20706565723000
+	  XOR-PEER-ADDRESS: length=8, IPv4 addr=192.168.88.130:41219
+	  SOFTWARE: length=29, value="Citrix-3.2.3.1 'Marshal West'"
+	  FINGERPRINT: length=4, value=2184567178 (0x8235d98a)
+	--- end of STUN message ---
+
+	17:01:39.498  client_main.c  .Client received 17 bytes data from 192.168.88.130:41219: Hello from peer0
+
+	}
+}
